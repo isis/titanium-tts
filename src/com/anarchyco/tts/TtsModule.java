@@ -6,20 +6,21 @@
  * Please see the LICENSE included with this distribution for details.
  *
  */
-package com.anarchyco.titanium.tts;
+package com.anarchyco.tts;
 
 import java.util.Locale;
 
 import org.appcelerator.kroll.KrollModule;
 import org.appcelerator.kroll.annotations.Kroll;
 
+import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.titanium.TiContext;
 import org.appcelerator.titanium.util.Log;
 import org.appcelerator.titanium.util.TiConfig;
 
 import android.speech.tts.TextToSpeech;
 
-@Kroll.module(name="Tts", id="com.anarchyco.titanium.tts")
+@Kroll.module(name="Tts", id="com.anarchyco.tts")
 public class TtsModule extends KrollModule implements TextToSpeech.OnInitListener
 {
 	private static final String LCAT = "TtsModule";
@@ -28,11 +29,19 @@ public class TtsModule extends KrollModule implements TextToSpeech.OnInitListene
 	private boolean initialized = false;
 	private TextToSpeech tts;
 	
-	public TtsModule(TiContext tiContext) {
-		super(tiContext);
+	public TtsModule() {
+		super();
 		
-		tts = new TextToSpeech(tiContext.getAndroidContext(), this);
+		tts = new TextToSpeech(TiApplication.getInstance(), this);
 	}
+	
+	@Kroll.onAppCreate
+	public static void onAppCreate(TiApplication app)
+	{
+		Log.d(LCAT, "inside onAppCreate");
+		// put module init code that needs to run when the application is created
+	}
+
 
 	@Kroll.method
 	public void speak(String text) {
