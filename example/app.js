@@ -13,7 +13,7 @@ window.add(label);
 window.open();
 
 // TODO: write your module tests here
-var tts = require('com.anarchyco.titanium.tts');
+var tts = require('com.anarchyco.tts');
 Ti.API.info("module is => " + tts);
 
 if (Ti.Platform.name == "android") {
